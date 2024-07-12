@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+{%include 'header.html'%}
+<div class="container bg-light p-4">
+    <div class="mb-3">
+        <a href="{%url 'dashboard'%}">Dashboard</a> / <a href="" class="text-secondary text-decoration-none">Add Note</a>
+    </div>
+    <h3 class="mb-3">Add Note</h3>
+
+    <div>
+        <form action="{%url 'add-note'%}" method="post">
+            {%csrf_token%}
+            <div class="form-group">
+                <input type="text" name="title" class="form-control border-0" required placeholder="Title...">
+                <textarea  name="description" class="form-control border-0 mt-2" rows="6" placeholder="Description..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3"> <i class="fa fa-plus"></i> Add Note</button>
+        </form>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+{%include 'header.html'%}
+
+  <div class="container">
+    <div class="d-flex  flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+        <div>
+            <h3>Hey, {{request.user.username | capfirst}}</h3>
+        </div>
+        <a href="{%url 'add-note'%}" class="btn btn-primary"> <i class="fa fa-plus"></i> New Note</a>
+    </div>
+    {% if notes %}
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-centr">
+        {%for note in notes%}
+        <a href="{%url 'note' note.id%}" class="text-decoration-none text-dark">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal text-center">{{note.title}}</h4>
+              </div>
+              <div class="card-body">
+                <p>
+                    {{note.description}}
+                </p>
+                
+              </div>
+            </div>
+          </div>
+        </a>
+          {%endfor%}
+    </div>
+    {%else%}
+    <div class="alert alert-info text-center">
+      You don't have any notes yet. <a href="{%url 'add-note'%}">Create one</a>.
+    </div>
+    {%endif%}
+  </div>
+
+{%endblock%}

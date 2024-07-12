@@ -1,0 +1,59 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%include 'header.html'%}
+
+<div class="container">
+  <div class="d-flex  flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+    <div>
+      <h3>Hey, {{request.user.username | capfirst}}</h3>
+    </div>
+  </div>
+  {% if notes %}
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-centr">
+    {%for note in notes%}
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal text-center">{{note.title}}</h4>
+        </div>
+        <div class="card-body">
+          <p>
+            {{note.description}}
+          </p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop-{{note.id}}">Restore</a>
+          <a href="{%url 'delete-note' note.id %}" class="btn btn-danger">Delete Permanently</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="staticBackdrop-{{note.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">{{note.title}}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you want to restore this note?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="{%url 'restore-note' note.id %}" class="btn btn-primary">Restore</a>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+  {%else%}
+  <div class="alert alert-info text-center">
+    You don't have deleted notes yet.
+  </div>
+  {%endif%}
+</div>
+
+{%endblock%}
